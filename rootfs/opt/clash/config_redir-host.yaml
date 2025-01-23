@@ -1,0 +1,41 @@
+# Provides a default traffic mark for outbound connections on Linux
+routing-mark: 2 # Prevent cyclic redirection
+tproxy-port: 7894
+mixed-port: 7890
+mode: rule
+ipv6: false
+log-level: error
+allow-lan: true
+unified-delay: true
+tcp-concurrent: true
+external-controller: 0.0.0.0:9090
+external-ui: ./ui
+
+# DNS server settings
+# This section is optional. When not present, the DNS server will be disabled.
+dns:
+  enable: true
+  listen: 0.0.0.0:7874
+  ipv6: false
+  # Bootstrap DNS
+  default-nameserver: [223.5.5.5, 119.29.29.29]
+  # Upstream DNS
+  nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+
+# find-process-mode: off
+# global-client-fingerprint: chrome
+
+# profile:
+#  store-selected: true
+#  store-fake-ip: true
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    # QUIC:
+    #   ports: [443, 8443]
