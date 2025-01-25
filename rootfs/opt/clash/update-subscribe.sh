@@ -1,5 +1,11 @@
 #!/bin/sh
 
+reload_clash(){
+    /etc/init.d/clash enable
+    /etc/init.d/clash stop
+    /etc/init.d/clash start
+}
+
 update() {
     url=$1
     [ -d /tmp/clash/profile ] || mkdir /tmp/clash/profile
@@ -31,10 +37,16 @@ update() {
     curl -X PUT -s http://127.0.0.1:9090/configs -H "Content-Type: application/json" -d '{"path":"/opt/clash/config.yaml"}'
 
     if [ $? -ne 0 ]; then
-        /etc/init.d/clash enable
-        /etc/init.d/clash stop
-        /etc/init.d/clash start
+        reload_clash
     fi
+    
+    netstat -na | grep 7890 >/dev/null
+    if [ $? -ne 0 ]; then
+        reload_clash
+    fi
+    
+    myip=$(ip -o route get to 223.5.5.5 | awk '{print $7}')
+    echo -e "web-ui\nhttp://$myip:9090/ui/?hostname=$myip&port=9090"
 }
 
 if [ "$1" != "" ]; then
@@ -47,3 +59,4 @@ if [ -e .suburl ]; then
     exit 0
 fi
 echo -e "usage: \n\t$0 http://xxx.xx/subUrl"
+exit 1
