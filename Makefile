@@ -52,7 +52,7 @@ define Package/$(PKG_NAME)/install
 	
 	$(INSTALL_DATA) ./rootfs/opt/clash/config_fake-ip.yaml $(1)/opt/clash/
 	$(INSTALL_DATA) ./rootfs/opt/clash/config_redir-host.yaml $(1)/opt/clash/
-	$(INSTALL_BIN) ./rootfs/opt/clash/clash-menu.sh $(1)/root/
+	$(INSTALL_BIN) ./rootfs/opt/clash/clash-menu.sh $(1)/opt/clash/
 
 	$(INSTALL_DIR) $(1)/opt/clash/ui
 	$(CP) ./rootfs/opt/clash/ui/* $(1)/opt/clash/ui/
