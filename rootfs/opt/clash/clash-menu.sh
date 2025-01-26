@@ -84,7 +84,7 @@ showStatus(){
     myip=$(ip -o route get to 223.5.5.5 | awk '{print $7}')
     webUI="http://$myip:9090/ui/?hostname=$myip&port=9090"
     serviceStatus=$(/etc/init.d/clash status)
-    clashCommand=$(ps | grep clash | grep "/" | awk '{print $5,$6,$7}')        
+    clashCommand=$(ps | grep clash | grep "\-d" | awk '{print $5,$6,$7}')        
     echo "#############################################################"
     echo -e "${GREEN}serviceStatus: ${RED}${serviceStatus}${PLAIN}"
     if [ "$clashCommand" != "" ]; then
