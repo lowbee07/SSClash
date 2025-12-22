@@ -79,7 +79,7 @@ proxy-groups:
   - name: PROXY
     type: select
     # disable-udp: true
-    proxies: [XX-reality, YY-reality] # change it, add the others
+    proxies: [DIRECT, XX-reality, YY-reality] # change it, add the others
 
   # Fallback
   - name: FALLBACK
